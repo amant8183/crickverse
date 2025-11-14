@@ -1,7 +1,11 @@
 export interface Match {
-  id: string;
-  team_1: string;
-  team_2: string;
+  id: number;
+  match_name: string;
+  t1_name: string;
+  t2_name: string;
+  t1_short_name: string;
+  t2_short_name: string;
   match_date: string;
-  match_time: string;
+  t1_image: string;
+  t2_image: string;
 }
