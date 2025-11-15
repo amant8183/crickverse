@@ -1,8 +1,13 @@
 export interface Player {
-  id: string;
+  id: number;
+  player_id: string;
   name: string;
-  role: "BAT" | "BOWL" | "AR" | "WK";
+  role: "Batsman" | "Bowler" | "All-Rounder" | "Wicket-Keeper";
+  short_name: string;
   team_name: string;
-  points: number;
-  credits: number;
+  team_short_name: string;
+  team_logo: string;
+  event_total_points: number;
+  event_player_credit: number;
+  is_playing: boolean;
 }

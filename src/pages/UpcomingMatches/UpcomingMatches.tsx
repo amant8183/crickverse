@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { getUpcomingMatches } from "../../api/matches";
-import type { Match } from "../../types/match";
+import { getUpcomingMatches } from "../../api/matches.ts";
+import type { Match } from "../../types/match.ts";
+import MatchCard from "../../components/MatchCard.tsx";
+import { useNavigate } from "react-router-dom";
 
 export default function UpcomingMatches() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchMatches = async () => {
       try {
@@ -27,11 +29,14 @@ export default function UpcomingMatches() {
     <div>
       <h1>Upcoming Matches</h1>
 
-      {matches.map((match, index) => (
-        <div key={match.id ?? index}>
-          {match.t1_short_name} vs {match.t2_short_name}
-        </div>
+      {matches.map((match) => (
+        <MatchCard
+          key={match.id}
+          match={match}
+          onClick={() => navigate(`/pick-players/${match.id}`)}
+        />
       ))}
+
 
 
     </div>
