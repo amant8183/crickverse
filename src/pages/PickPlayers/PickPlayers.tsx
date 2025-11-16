@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import type { Player } from "../../types/player";
 import { getPlayers } from "../../api/players";
 import { canSelectPlayer, getTeamValidationErrors } from "../../utils/teamValidation";
@@ -11,9 +11,10 @@ import SelectionSummary from "../../components/SelectionSummary";
 export default function PickPlayers() {
   const { matchId } = useParams();
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   const [players, setPlayers] = useState<Player[]>([]);
-  const [selected, setSelected] = useState<Player[]>([]);
+  const [selected, setSelected] = useState<Player[]>(state?.players ?? []);
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [teamFilter, setTeamFilter] = useState("ALL");
 
@@ -86,7 +87,12 @@ export default function PickPlayers() {
         disabled={errors.length > 0}
         onClick={() =>
           navigate(`/captain/${matchId}`, {
-            state: { players: selected },
+            state: {
+              players: selected,
+              captainId: state?.captainId ?? null,
+              viceCaptainId: state?.viceCaptainId ?? null,
+              editingIndex: state?.editingIndex ?? null,
+            },
           })
         }
         className={`mt-6 w-full py-3 rounded-xl text-lg ${

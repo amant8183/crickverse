@@ -21,8 +21,8 @@ export default function PickCaptain() {
 
   const players: Player[] = state.players;
 
-  const [captainId, setCaptainId] = useState<number | null>(null);
-  const [viceCaptainId, setViceCaptainId] = useState<number | null>(null);
+  const [captainId, setCaptainId] = useState<number | null>(state?.captainId ?? null);
+  const [viceCaptainId, setViceCaptainId] = useState<number | null>(state?.viceCaptainId ?? null);
 
   const captain = players.find((p: Player) => p.id === captainId) ?? null;
   const viceCaptain = players.find((p: Player) => p.id === viceCaptainId) ?? null;
@@ -38,6 +38,7 @@ export default function PickCaptain() {
         players,
         captainId,
         viceCaptainId,
+        editingIndex: state?.editingIndex ?? null,
       },
     });
   };
