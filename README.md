@@ -76,11 +76,8 @@ crickverse/
 ├── src/
 │   ├── api/                # API handlers
 │   ├── components/         # Reusable UI components
-│   │   └── common/         # Buttons, modals, loaders, etc.
-│   ├── context/            # Global state management
-│   ├── hooks/              # Custom React hooks
-│   ├── layouts/            # Layout and navbar
 │   ├── pages/              # App pages (UpcomingMatches, PickPlayers, etc.)
+│   ├── router/             # App routes 
 │   ├── types/              # TypeScript type definitions
 │   ├── utils/              # Helpers, constants, validation logic
 │   ├── styles/             # Global Tailwind styles
@@ -89,6 +86,8 @@ crickverse/
 │   └── vite-env.d.ts       # Vite environment type declarations
 ├── .env                    # Environment variables
 ├── .gitignore
+├── eslint.config.js
+├── package-lock.json
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
