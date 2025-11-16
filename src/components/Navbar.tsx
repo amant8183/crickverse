@@ -5,22 +5,6 @@ export default function Navbar() {
 
   const goHome = () => navigate("/");
 
-  const goToLastMatchRoute = (path: "pick" | "teams") => {
-    const lastMatchId = localStorage.getItem("lastMatchId");
-    if (!lastMatchId) {
-      // If no match has been chosen yet, send user to matches list
-      navigate("/");
-      alert("Select a match from Upcoming Matches first.");
-      return;
-    }
-
-    if (path === "pick") {
-      navigate(`/pick-players/${lastMatchId}`);
-    } else {
-      navigate(`/teams/${lastMatchId}`);
-    }
-  };
-
   return (
     <header className="bg-[var(--color-bgDark)] text-[var(--color-textPrimary)] shadow-md fixed w-full z-100 ">
       {/* Top row: brand */}
@@ -34,15 +18,15 @@ export default function Navbar() {
             CV
           </div>
           <div className="flex flex-col items-start">
-            <span className="text-sm font-semibold leading-none">CrickVerse</span>
+            <span className="text-sm font-semibold leading-none">
+              CrickVerse
+            </span>
             <span className="text-[10px] text-[var(--color-textSecondary)] leading-none mt-1">
               Fantasy Sports
             </span>
           </div>
         </button>
       </div>
-      
-      
     </header>
   );
 }

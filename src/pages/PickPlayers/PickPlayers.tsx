@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import type { Player } from "../../types/player";
 import { getPlayers } from "../../api/players";
-import { canSelectPlayer, getTeamValidationErrors } from "../../utils/teamValidation";
+import {
+  canSelectPlayer,
+  getTeamValidationErrors,
+} from "../../utils/teamValidation";
 
 import PlayerCard from "../../components/PlayerCard";
 
@@ -14,7 +17,7 @@ export default function PickPlayers() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [selected, setSelected] = useState<Player[]>(state?.players ?? []);
   const [roleFilter, setRoleFilter] = useState("Wicket-Keeper");
-  const [teamFilter, setTeamFilter] = useState("ALL");
+  const [teamFilter] = useState("ALL");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,32 +53,46 @@ export default function PickPlayers() {
     }
   };
 
-  const teamOptions = Array.from(new Set(players.map((p) => p.team_short_name)));
+  const teamOptions = Array.from(
+    new Set(players.map((p) => p.team_short_name)),
+  );
 
   const visible = players
     .filter((p) => p.role === roleFilter)
-    .filter((p) => (teamFilter === "ALL" ? true : p.team_short_name === teamFilter));
+    .filter((p) =>
+      teamFilter === "ALL" ? true : p.team_short_name === teamFilter,
+    );
 
-  const batsmen = selected.filter(p => p.role === "Batsman").length;
-  const bowlers = selected.filter(p => p.role === "Bowler").length;
-  const allRounders = selected.filter(p => p.role === "All-Rounder").length;
-  const keepers = selected.filter(p => p.role === "Wicket-Keeper").length;
-  const creditsLeft = 100 - selected.reduce((sum, p) => sum + p.event_player_credit, 0);
+  const batsmen = selected.filter((p) => p.role === "Batsman").length;
+  const bowlers = selected.filter((p) => p.role === "Bowler").length;
+  const allRounders = selected.filter((p) => p.role === "All-Rounder").length;
+  const keepers = selected.filter((p) => p.role === "Wicket-Keeper").length;
+  const creditsLeft =
+    100 - selected.reduce((sum, p) => sum + p.event_player_credit, 0);
 
   const team1 = teamOptions[0] || "";
   const team2 = teamOptions[1] || "";
-  const team1Logo = players.find(p => p.team_short_name === team1)?.team_logo || "";
-  const team2Logo = players.find(p => p.team_short_name === team2)?.team_logo || "";
-  const team1Count = selected.filter(p => p.team_short_name === team1).length;
-  const team2Count = selected.filter(p => p.team_short_name === team2).length;
+  const team1Logo =
+    players.find((p) => p.team_short_name === team1)?.team_logo || "";
+  const team2Logo =
+    players.find((p) => p.team_short_name === team2)?.team_logo || "";
+  const team1Count = selected.filter((p) => p.team_short_name === team1).length;
+  const team2Count = selected.filter((p) => p.team_short_name === team2).length;
 
   return (
     <div className="h-screen pt-14 min-h-0 flex flex-col bg-[var(--color-bgPrimary)]">
       {/* Header */}
       <div className="flex-shrink-0 bg-[var(--color-primary)] px-4 py-3 flex items-center gap-3">
         <button onClick={() => navigate(-1)} className="text-white">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
         </button>
         <h1 className="text-lg font-semibold text-white">Select Players</h1>
@@ -88,35 +105,53 @@ export default function PickPlayers() {
           <div className="flex items-center gap-3">
             {team1Logo && (
               <div className="relative">
-                <img src={team1Logo} alt={team1} className="w-14 h-14 rounded-full bg-white p-1" />
+                <img
+                  src={team1Logo}
+                  alt={team1}
+                  className="w-14 h-14 rounded-full bg-white p-1"
+                />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--color-primary)] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                   {team1Count}
                 </span>
-                <p className="text-[10px] text-center text-gray-300 mt-1 font-semibold">{team1}</p>
+                <p className="text-[10px] text-center text-gray-300 mt-1 font-semibold">
+                  {team1}
+                </p>
               </div>
             )}
 
             {team2Logo && (
               <div className="relative">
-                <img src={team2Logo} alt={team2} className="w-14 h-14 rounded-full bg-white p-1" />
+                <img
+                  src={team2Logo}
+                  alt={team2}
+                  className="w-14 h-14 rounded-full bg-white p-1"
+                />
                 <span className="absolute -top-1 -right-1 w-5 h-5 bg-[var(--color-primary)] text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                   {team2Count}
                 </span>
-                <p className="text-[10px] text-center text-gray-300 mt-1 font-semibold">{team2}</p>
+                <p className="text-[10px] text-center text-gray-300 mt-1 font-semibold">
+                  {team2}
+                </p>
               </div>
             )}
           </div>
 
           {/* Stats */}
           <div className="flex flex-col items-end">
-            <p className="text-[10px] text-gray-400">Max 7 players from a team</p>
+            <p className="text-[10px] text-gray-400">
+              Max 7 players from a team
+            </p>
             <div className="flex items-center gap-4 mt-1">
               <div className="text-center">
-                <p className="text-xl font-bold text-white">{selected.length}/11</p>
+                <p className="text-xl font-bold text-white">
+                  {selected.length}/11
+                </p>
                 <p className="text-[10px] text-gray-400">Players</p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-white">{creditsLeft.toFixed(1)}</p>
+                <p className="text-xl font-bold text-white">
+                  {creditsLeft.toFixed(1)}
+                </p>
                 <p className="text-[10px] text-gray-400">Credits Left</p>
               </div>
             </div>
@@ -232,18 +267,22 @@ export default function PickPlayers() {
 
           {!loading && !error && visible.length === 0 && (
             <div className="flex flex-col items-center justify-center py-12">
-              <p className="text-sm text-[var(--color-textSecondary)]">No players available</p>
+              <p className="text-sm text-[var(--color-textSecondary)]">
+                No players available
+              </p>
             </div>
           )}
 
-          {!loading && !error && visible.map((p) => (
-            <PlayerCard
-              key={p.id}
-              player={p}
-              selected={selected.some((x) => x.id === p.id)}
-              onToggle={toggle}
-            />
-          ))}
+          {!loading &&
+            !error &&
+            visible.map((p) => (
+              <PlayerCard
+                key={p.id}
+                player={p}
+                selected={selected.some((x) => x.id === p.id)}
+                onToggle={toggle}
+              />
+            ))}
         </div>
       </div>
 

@@ -1,4 +1,3 @@
-// CurrentTeam.tsx
 import type { Player } from "../../types/player";
 
 interface Props {
@@ -8,7 +7,12 @@ interface Props {
   onSave: () => void;
 }
 
-export default function CurrentTeam({ players, captainId, viceCaptainId, onSave }: Props) {
+export default function CurrentTeam({
+  players,
+  captainId,
+  viceCaptainId,
+  onSave,
+}: Props) {
   if (players.length === 0) {
     return (
       <div className="bg-white border border-gray-300 rounded-lg p-4 text-center text-gray-500">
@@ -44,10 +48,10 @@ export default function CurrentTeam({ players, captainId, viceCaptainId, onSave 
                 {p.role === "All-Rounder"
                   ? "AR"
                   : p.role === "Wicket-Keeper"
-                  ? "WK"
-                  : p.role === "Batsman"
-                  ? "Bat"
-                  : "Bowl"}
+                    ? "WK"
+                    : p.role === "Batsman"
+                      ? "Bat"
+                      : "Bowl"}
               </p>
             </div>
 

@@ -19,8 +19,8 @@ export default function PlayerCard({
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {/* Team Logo */}
         <div className="relative flex-shrink-0 w-10 h-10 bg-gray-100 rounded-lg p-1.5 flex items-center justify-center">
-          <img 
-            src={player.team_logo} 
+          <img
+            src={player.team_logo}
             alt={player.team_short_name}
             className="w-full h-full object-contain"
           />
@@ -32,9 +32,14 @@ export default function PlayerCard({
             {player.name}
           </p>
           <p className="text-[11px] text-gray-500">
-            {player.team_short_name} - {player.role === "All-Rounder" ? "WK" : 
-                                        player.role === "Wicket-Keeper" ? "WK" :
-                                        player.role === "Batsman" ? "Bat" : "Bowl"}
+            {player.team_short_name} -{" "}
+            {player.role === "All-Rounder"
+              ? "WK"
+              : player.role === "Wicket-Keeper"
+                ? "WK"
+                : player.role === "Batsman"
+                  ? "Bat"
+                  : "Bowl"}
           </p>
         </div>
       </div>
@@ -55,13 +60,22 @@ export default function PlayerCard({
 
       {/* Checkbox */}
       <div className="w-10 flex justify-center">
-        <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-          selected
-            ? "bg-[var(--color-accentRed)] border-[var(--color-accentRed)]"
-            : "border-gray-400"
-        }`}>
+        <div
+          className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+            selected
+              ? "bg-[var(--color-accentRed)] border-[var(--color-accentRed)]"
+              : "border-gray-400"
+          }`}
+        >
           {selected && (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              strokeWidth="3"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
           )}

@@ -27,17 +27,16 @@ export const getTeamValidationErrors = (selected: Player[]): string[] => {
   if (ms > 7) errors.push("Max 7 players allowed from Melbourne Stars (MS)");
   if (ps > 7) errors.push("Max 7 players allowed from Perth Scorchers (PS)");
 
-  if (totalCredits(selected) > 100)
-    errors.push("Credits exceed 100");
+  if (totalCredits(selected) > 100) errors.push("Credits exceed 100");
 
   return errors;
 };
 
 export const canSelectPlayer = (
   player: Player,
-  selected: Player[]
+  selected: Player[],
 ): boolean => {
-  if (selected.some(p => p.id === player.id)) return true;
+  if (selected.some((p) => p.id === player.id)) return true;
 
   if (selected.length >= 11) return false;
 
@@ -49,8 +48,10 @@ export const canSelectPlayer = (
 
   if (role === "Batsman" && countByRole(selected, "Batsman") >= 7) return false;
   if (role === "Bowler" && countByRole(selected, "Bowler") >= 7) return false;
-  if (role === "All-Rounder" && countByRole(selected, "All-Rounder") >= 4) return false;
-  if (role === "Wicket-Keeper" && countByRole(selected, "Wicket-Keeper") >= 5) return false;
+  if (role === "All-Rounder" && countByRole(selected, "All-Rounder") >= 4)
+    return false;
+  if (role === "Wicket-Keeper" && countByRole(selected, "Wicket-Keeper") >= 5)
+    return false;
 
   return true;
 };

@@ -1,4 +1,3 @@
-// SavedTeamList.tsx
 import type { SavedTeam } from "../../types/myTeams";
 
 interface Props {

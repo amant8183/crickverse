@@ -11,7 +11,7 @@ export default function MatchCard({ match, onClick, joined = false }: Props) {
     <button
       type="button"
       onClick={onClick}
-className="w-full flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-[var(--color-bgWhite)] to-[var(--color-primaryLight)]/10 text-[var(--color-textDim)] px-4 py-4 shadow-sm border border-[var(--color-textSubtle)]/20 hover:border-[var(--color-primaryLight)]/60 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primaryLight)]/40 transition-all"
+      className="w-full flex items-center justify-between gap-3 rounded-2xl bg-gradient-to-r from-[var(--color-bgWhite)] to-[var(--color-primaryLight)]/10 text-[var(--color-textDim)] px-4 py-4 shadow-sm border border-[var(--color-textSubtle)]/20 hover:border-[var(--color-primaryLight)]/60 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primaryLight)]/40 transition-all"
     >
       <div className="flex items-center gap-3 min-w-0">
         <div className="flex items-center gap-2">
@@ -46,12 +46,24 @@ className="w-full flex items-center justify-between gap-3 rounded-2xl bg-gradien
             Cricket
           </span>
           {joined ? (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-accentBlue)]/10 text-[var(--color-accentBlue)] border border-[var(--color-accentBlue)]/30">Joined</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-[var(--color-accentBlue)]/10 text-[var(--color-accentBlue)] border border-[var(--color-accentBlue)]/30">
+              Joined
+            </span>
           ) : (
-            <span className="text-[10px] text-[var(--color-textSubtle)]">Tap to create team</span>
+            <span className="text-[10px] text-[var(--color-textSubtle)]">
+              Tap to create team
+            </span>
           )}
         </div>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-[var(--color-textSubtle)]"><path d="M9 18l6-6-6-6v12Z"/></svg>
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="text-[var(--color-textSubtle)]"
+        >
+          <path d="M9 18l6-6-6-6v12Z" />
+        </svg>
       </div>
     </button>
   );

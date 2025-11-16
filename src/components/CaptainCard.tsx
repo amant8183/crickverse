@@ -19,15 +19,13 @@ export default function CaptainCard({
   const isViceCaptain = viceCaptainId === player.id;
 
   return (
-    <div
-      className="w-full flex items-center justify-between px-4 py-3 border-b border-[var(--color-textSubtle)]/20 hover:bg-[var(--color-bgSecondary)]/50 transition-colors text-left bg-white"
-    >
+    <div className="w-full flex items-center justify-between px-4 py-3 border-b border-[var(--color-textSubtle)]/20 hover:bg-[var(--color-bgSecondary)]/50 transition-colors text-left bg-white">
       {/* Player Info */}
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {/* Team Logo */}
         <div className="relative flex-shrink-0 w-10 h-10 bg-gray-100 rounded-lg p-1.5 flex items-center justify-center">
-          <img 
-            src={player.team_logo} 
+          <img
+            src={player.team_logo}
             alt={player.team_short_name}
             className="w-full h-full object-contain"
           />
@@ -39,9 +37,14 @@ export default function CaptainCard({
             {player.name}
           </p>
           <p className="text-[11px] text-gray-500">
-            {player.team_short_name} - {player.role === "All-Rounder" ? "AR" : 
-                                        player.role === "Wicket-Keeper" ? "WK" :
-                                        player.role === "Batsman" ? "Bat" : "Bowl"}
+            {player.team_short_name} -{" "}
+            {player.role === "All-Rounder"
+              ? "AR"
+              : player.role === "Wicket-Keeper"
+                ? "WK"
+                : player.role === "Batsman"
+                  ? "Bat"
+                  : "Bowl"}
           </p>
         </div>
       </div>
@@ -56,9 +59,7 @@ export default function CaptainCard({
             : "border-gray-400 hover:border-gray-500"
         } ${isViceCaptain ? "cursor-not-allowed opacity-50" : ""}`}
       >
-        {isCaptain && (
-          <span className="text-xs font-bold text-white">C</span>
-        )}
+        {isCaptain && <span className="text-xs font-bold text-white">C</span>}
       </button>
 
       {/* Vice Captain Button */}

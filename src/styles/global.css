@@ -2,32 +2,32 @@
 
 @theme {
   /* Primary colors */
-  --color-primary: #4c3fb4;        /* Indigo-purple - main action buttons */
-  --color-primaryHover: #3b2f88;   /* Darker indigo - button hover state */
-  --color-primaryLight: #6f63d9;   /* Light indigo - focus rings, subtle fills */
-  --color-primaryDark: #251a5e;    /* Deep indigo - headers, strong accents */
+  --color-primary: #4c3fb4; /* Indigo-purple - main action buttons */
+  --color-primaryHover: #3b2f88; /* Darker indigo - button hover state */
+  --color-primaryLight: #6f63d9; /* Light indigo - focus rings, subtle fills */
+  --color-primaryDark: #251a5e; /* Deep indigo - headers, strong accents */
 
   /* Background colors */
-  --color-bgDark: #061021;         /* Deep navy - app shell / header background */
-  --color-bgLight: #0f172a;        /* Dark slate - page backgrounds */
-  --color-bgWhite: #ffffff;        /* White - cards, surfaces */
-  --color-bgSecondary: #111827;    /* Slightly lighter dark - secondary panels */
+  --color-bgDark: #061021; /* Deep navy - app shell / header background */
+  --color-bgLight: #0f172a; /* Dark slate - page backgrounds */
+  --color-bgWhite: #ffffff; /* White - cards, surfaces */
+  --color-bgSecondary: #111827; /* Slightly lighter dark - secondary panels */
 
   /* Text colors */
-  --color-textPrimary: #f9fafb;    /* Almost white - main text on dark bg */
-  --color-textSecondary: #9ca3af;  /* Cool gray - secondary text */
-  --color-textMuted: #6b7280;      /* Dim gray - muted labels */
-  --color-textLight: #ffffff;      /* Pure white - on primary/accents */
-  --color-textLighter: #d1d5db;    /* Light gray - subtle text */
-  --color-textSubtle: #4b5563;     /* Dark gray - subtle borders / meta text */
-  --color-textDim: #1f2937;        /* Dark slate - text on light surfaces */
-  --color-textDark: #020617;       /* Almost black - strongest text on white */
+  --color-textPrimary: #f9fafb; /* Almost white - main text on dark bg */
+  --color-textSecondary: #9ca3af; /* Cool gray - secondary text */
+  --color-textMuted: #6b7280; /* Dim gray - muted labels */
+  --color-textLight: #ffffff; /* Pure white - on primary/accents */
+  --color-textLighter: #d1d5db; /* Light gray - subtle text */
+  --color-textSubtle: #4b5563; /* Dark gray - subtle borders / meta text */
+  --color-textDim: #1f2937; /* Dark slate - text on light surfaces */
+  --color-textDark: #020617; /* Almost black - strongest text on white */
 
   /* Accent colors */
-  --color-accentRed: #f97373;      /* Soft red - errors / delete actions */
+  --color-accentRed: #f97373; /* Soft red - errors / delete actions */
   --color-accentRedHover: #ef4444; /* Strong red - error hover/active */
-  --color-accentRedDark: #b91c1c;  /* Dark red - critical states */
-  --color-accentGreen: #22c55e;    /* Green - success, valid states */
-  --color-accentYellow: #facc15;   /* Yellow - highlights, badges */
-  --color-accentBlue: #38bdf8;     /* Sky blue - info badges, links */
+  --color-accentRedDark: #b91c1c; /* Dark red - critical states */
+  --color-accentGreen: #22c55e; /* Green - success, valid states */
+  --color-accentYellow: #facc15; /* Yellow - highlights, badges */
+  --color-accentBlue: #38bdf8; /* Sky blue - info badges, links */
 }

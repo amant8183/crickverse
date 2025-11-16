@@ -28,12 +28,22 @@ function EmptyState() {
   return (
     <div className="rounded-2xl border border-[var(--color-textSubtle)]/20 bg-[var(--color-bgSecondary)]/30 p-8 text-center">
       <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-primaryLight)]/15 text-[var(--color-primaryLight)]">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path d="M7 2h10a2 2 0 0 1 2 2v3H5V4a2 2 0 0 1 2-2Zm12 7H5v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9ZM8 12h3v3H8v-3Z" />
         </svg>
       </div>
-      <h3 className="text-sm font-semibold text-[var(--color-textLight)]">No upcoming matches</h3>
-      <p className="mt-1 text-xs text-[var(--color-textSecondary)]">Please check back later for new fixtures.</p>
+      <h3 className="text-sm font-semibold text-[var(--color-textLight)]">
+        No upcoming matches
+      </h3>
+      <p className="mt-1 text-xs text-[var(--color-textSecondary)]">
+        Please check back later for new fixtures.
+      </p>
     </div>
   );
 }
@@ -42,7 +52,7 @@ export default function UpcomingMatches() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [tab, setTab] = useState<"all" | "joined">("all");
+  const [tab] = useState<"all" | "joined">("all");
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
@@ -51,20 +61,20 @@ export default function UpcomingMatches() {
       title: "Welcome Bonus",
       description: "Get 100% bonus on your first deposit up to $500",
       badge: "NEW USER",
-      gradient: "from-purple-600 to-pink-600"
+      gradient: "from-purple-600 to-pink-600",
     },
     {
       title: "Weekend Special",
       description: "Join 3 contests and get 1 free entry this weekend",
       badge: "LIMITED TIME",
-      gradient: "from-blue-600 to-cyan-600"
+      gradient: "from-blue-600 to-cyan-600",
     },
     {
       title: "Refer & Earn",
       description: "Invite friends and earn $50 for each successful referral",
       badge: "POPULAR",
-      gradient: "from-orange-600 to-red-600"
-    }
+      gradient: "from-orange-600 to-red-600",
+    },
   ];
 
   const joinedSet = (() => {
@@ -109,15 +119,22 @@ export default function UpcomingMatches() {
           {offers.map((offer, index) => (
             <div
               key={index}
-              className={`absolute inset-0 transition-all duration-700 ease-in-out ${index === currentSlide ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
-                } ${index < currentSlide ? '-translate-x-full' : ''}`}
+              className={`absolute inset-0 transition-all duration-700 ease-in-out ${
+                index === currentSlide
+                  ? "translate-x-0 opacity-100"
+                  : "translate-x-full opacity-0"
+              } ${index < currentSlide ? "-translate-x-full" : ""}`}
             >
-              <div className={`h-full bg-gradient-to-r ${offer.gradient} px-6 py-8 flex flex-col justify-between`}>
+              <div
+                className={`h-full bg-gradient-to-r ${offer.gradient} px-6 py-8 flex flex-col justify-between`}
+              >
                 <div>
                   <span className="inline-block px-3 py-1 text-xs font-semibold text-white bg-white/20 rounded-full mb-3">
                     {offer.badge}
                   </span>
-                  <h2 className="text-2xl font-bold text-white mb-2">{offer.title}</h2>
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    {offer.title}
+                  </h2>
                   <p className="text-sm text-white/90">{offer.description}</p>
                 </div>
               </div>
@@ -131,8 +148,9 @@ export default function UpcomingMatches() {
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-1.5 rounded-full transition-all ${index === currentSlide ? 'w-8 bg-white' : 'w-1.5 bg-white/50'
-                }`}
+              className={`h-1.5 rounded-full transition-all ${
+                index === currentSlide ? "w-8 bg-white" : "w-1.5 bg-white/50"
+              }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -142,25 +160,35 @@ export default function UpcomingMatches() {
       {/* Go to My Teams Button */}
       <div className="flex">
         <button
-          onClick={() => navigate("/teams/" + (localStorage.getItem("lastMatchId") || ""))}
+          onClick={() =>
+            navigate("/teams/" + (localStorage.getItem("lastMatchId") || ""))
+          }
           className="ml-auto px-4 py-2 rounded-lg bg-[var(--color-accentRed)] text-white text-sm font-semibold shadow-sm hover:opacity-90 transition"
         >
           My Teams
         </button>
       </div>
 
-
       {/* Error */}
       {error && (
         <div className="flex items-start gap-2 rounded-2xl border border-[var(--color-accentRedHover)]/30 bg-[var(--color-accentRedHover)]/10 p-3 text-[var(--color-textLight)]">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="mt-0.5 text-[var(--color-accentRedHover)]"><path d="M11 7h2v6h-2V7Zm0 8h2v2h-2v-2Zm1-13a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z" /></svg>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="mt-0.5 text-[var(--color-accentRedHover)]"
+          >
+            <path d="M11 7h2v6h-2V7Zm0 8h2v2h-2v-2Zm1-13a10 10 0 1 0 0 20 10 10 0 0 0 0-20Z" />
+          </svg>
           <span className="text-sm">{error}</span>
         </div>
       )}
 
       {/* Content */}
       <div className="grid grid-cols-1">
-        {loading && Array.from({ length: 6 }).map((_, idx) => <SkeletonCard key={idx} />)}
+        {loading &&
+          Array.from({ length: 6 }).map((_, idx) => <SkeletonCard key={idx} />)}
 
         {!loading && !error && matches.length === 0 && (
           <div className="col-span-full">
@@ -168,8 +196,12 @@ export default function UpcomingMatches() {
           </div>
         )}
 
-        {!loading && !error &&
-          (tab === "all" ? matches : matches.filter((m) => joinedSet.has(m.id))).map((match) => (
+        {!loading &&
+          !error &&
+          (tab === "all"
+            ? matches
+            : matches.filter((m) => joinedSet.has(m.id))
+          ).map((match) => (
             <MatchCard
               key={match.id}
               match={match}
