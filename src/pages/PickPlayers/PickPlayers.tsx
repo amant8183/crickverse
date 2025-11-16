@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Player } from "../../types/player";
 import { getPlayers } from "../../api/players";
-import { canSelectPlayer, isFinalTeamValid } from "../../utils/teamValidation";
+import { canSelectPlayer, getTeamValidationErrors, isFinalTeamValid } from "../../utils/teamValidation";
 
 import PlayerCard from "../../components/PlayerCard";
 import RoleFilter from "../../components/RoleFilter";
@@ -15,6 +15,8 @@ export default function PickPlayers() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [selected, setSelected] = useState<Player[]>([]);
   const [roleFilter, setRoleFilter] = useState("ALL");
+
+  const errors = getTeamValidationErrors(selected);
 
   useEffect(() => {
     getPlayers().then(setPlayers);
@@ -57,18 +59,32 @@ export default function PickPlayers() {
         ))}
       </div>
 
-      {isFinalTeamValid(selected) && (
-        <button
-          onClick={() =>
-            navigate(`/match/${matchId}/captain`, {
-              state: { players: selected },
-            })
-          }
-          className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl text-lg"
-        >
-          Proceed to Pick Captain
-        </button>
+      {/* 🔥 Always visible button — only disabled when invalid */}
+      <button
+        disabled={errors.length > 0}
+        onClick={() =>
+          navigate(`/captain/${matchId}`, {
+            state: { players: selected },
+          })
+        }
+        className={`mt-6 w-full py-3 rounded-xl text-lg ${errors.length === 0
+            ? "bg-blue-600 text-white"
+            : "bg-gray-400 text-gray-200 cursor-not-allowed"
+          }`}
+      >
+        Proceed to Pick Captain
+      </button>
+
+      {/* 🔥 Show validation messages */}
+      {errors.length > 0 && (
+        <ul className="mt-3 text-red-600 text-sm list-disc pl-5">
+          {errors.map((error, idx) => (
+            <li key={idx}>{error}</li>
+          ))}
+        </ul>
       )}
+
     </div>
   );
+
 }
