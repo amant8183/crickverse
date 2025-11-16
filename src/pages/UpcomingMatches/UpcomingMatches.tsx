@@ -26,19 +26,32 @@ export default function UpcomingMatches() {
   if (loading) return <div>Loading matches...</div>;
 
   return (
-    <div>
-      <h1>Upcoming Matches</h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Upcoming Matches</h1>
 
       {matches.map((match) => (
-        <MatchCard
-          key={match.id}
-          match={match}
-          onClick={() => navigate(`/pick-players/${match.id}`)}
-        />
+        <div key={match.id} className="mb-4">
+          <MatchCard
+            match={match}
+            onClick={() => navigate(`/pick-players/${match.id}`)}
+          />
+
+          <div className="flex justify-end gap-2 mt-2">
+            <button
+              onClick={() => navigate(`/pick-players/${match.id}`)}
+              className="px-3 py-1 text-sm rounded-lg border border-white bg-purple-600 text-white shadow"
+            >
+              Create Team
+            </button>
+            <button
+              onClick={() => navigate(`/teams/${match.id}`)}
+              className="px-3 py-1 text-sm rounded-lg bg-white text-purple-700 shadow"
+            >
+              My Teams
+            </button>
+          </div>
+        </div>
       ))}
-
-
-
     </div>
   );
 }
