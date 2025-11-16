@@ -1,3 +1,4 @@
+// CurrentTeam.tsx
 import type { Player } from "../../types/player";
 
 interface Props {
@@ -10,30 +11,68 @@ interface Props {
 export default function CurrentTeam({ players, captainId, viceCaptainId, onSave }: Props) {
   if (players.length === 0) {
     return (
-      <div className="p-3 bg-gray-100 rounded-lg mb-4 text-gray-500">
-        No players selected for this team.
+      <div className="bg-white border border-gray-300 rounded-lg p-4 text-center text-gray-500">
+        <p className="text-sm">No players selected for this team.</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-100 p-3 rounded-lg mb-4">
-      <h2 className="text-xl font-semibold mb-2">Current Team</h2>
+    <div className="border border-gray-300 rounded-lg overflow-hidden bg-white">
+      {/* Header */}
+      <div className="bg-gray-100 px-4 py-3 border-b border-gray-300">
+        <h2 className="text-sm font-semibold text-gray-900">
+          Current Team ({players.length}/11)
+        </h2>
+      </div>
 
-      {players.map((p) => (
-        <div key={p.id} className="flex justify-between p-2 border-b">
-          <span>
-            {p.short_name} ({p.role})
-          </span>
+      {/* Player list */}
+      <div className="divide-y divide-gray-200">
+        {players.map((p) => (
+          <div
+            key={p.id}
+            className="flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
+          >
+            {/* Player Info */}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold text-gray-900 truncate">
+                {p.name}
+              </p>
 
-          {p.id === captainId && <span className="text-blue-600 font-bold">⭐ C</span>}
-          {p.id === viceCaptainId && <span className="text-green-600 font-bold">🌟 VC</span>}
-        </div>
-      ))}
+              <p className="text-[11px] text-gray-500">
+                {p.team_short_name} •{" "}
+                {p.role === "All-Rounder"
+                  ? "AR"
+                  : p.role === "Wicket-Keeper"
+                  ? "WK"
+                  : p.role === "Batsman"
+                  ? "Bat"
+                  : "Bowl"}
+              </p>
+            </div>
 
+            {/* Captain / VC badges */}
+            <div className="flex gap-2 ml-3">
+              {p.id === captainId && (
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-green-600 text-white text-xs font-bold">
+                  C
+                </span>
+              )}
+
+              {p.id === viceCaptainId && (
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded bg-blue-600 text-white text-xs font-bold">
+                  VC
+                </span>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Save Button */}
       <button
         onClick={onSave}
-        className="mt-4 w-full bg-blue-600 text-white py-3 rounded-xl"
+        className="w-full px-4 py-3 bg-[var(--color-accentRed)] text-white font-semibold hover:opacity-90 transition-colors"
       >
         Save Team
       </button>

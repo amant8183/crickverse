@@ -19,7 +19,7 @@ export default function MyTeams() {
   const [savedTeams, setSavedTeams] = useState<SavedTeam[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // Load saved teams on mount
+  // Load saved teams
   useEffect(() => {
     try {
       const raw = localStorage.getItem("fantasyTeams");
@@ -63,7 +63,6 @@ export default function MyTeams() {
     setCaptainId(null);
     setViceCaptainId(null);
 
-    // Clear route state so refresh doesn't restore this team as current
     navigate(`/teams/${matchId}`, { replace: true, state: {} });
   };
 
@@ -72,14 +71,16 @@ export default function MyTeams() {
 
     const team = savedTeams[index];
 
-    // Remove this team from saved list while it is being edited
+    // Remove team from list while editing
     const existing = JSON.parse(localStorage.getItem("fantasyTeams") || "{}");
     const existingTeams: SavedTeam[] = existing[matchId] || [];
     const updatedTeams = existingTeams.filter((_, i) => i !== index);
+
     const updated = {
       ...existing,
       [matchId]: updatedTeams,
     };
+
     localStorage.setItem("fantasyTeams", JSON.stringify(updated));
     setSavedTeams(updatedTeams);
 
@@ -109,27 +110,48 @@ export default function MyTeams() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">My Teams</h1>
+    <div className="pt-14 h-screen min-h-0 flex flex-col bg-[var(--color-bgPrimary)]">
+      {/* Header */}
+      <div className="flex-shrink-0 bg-[var(--color-primary)] px-4 py-3 flex items-center gap-3">
+        <button onClick={() => navigate(-1)} className="text-white">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <h1 className="text-lg font-semibold text-white">My Teams</h1>
+      </div>
 
+      {/* Error Message */}
       {error && (
-        <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
-          {error}
+        <div className="flex-shrink-0 bg-white border-t border-[var(--color-textSubtle)]/10 px-4 py-3">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-2">
+            <p className="text-red-600 text-[10px]">{error}</p>
+          </div>
         </div>
       )}
 
-      <CurrentTeam
-        players={currentPlayers}
-        captainId={captainId}
-        viceCaptainId={viceCaptainId}
-        onSave={handleSaveTeam}
-      />
+      {/* MAIN CONTENT WRAPPER */}
+      <div className="flex-1 min-h-0 flex flex-col bg-white">
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto bg-white px-4 py-3 space-y-3">
 
-      <SavedTeamList
-        teams={savedTeams}
-        onEdit={handleEditTeam}
-        onDelete={handleDeleteTeam}
-      />
+          {/* Current Team Card */}
+          <CurrentTeam
+            players={currentPlayers}
+            captainId={captainId}
+            viceCaptainId={viceCaptainId}
+            onSave={handleSaveTeam}
+          />
+
+          {/* Saved Team List */}
+          <SavedTeamList
+            teams={savedTeams}
+            onEdit={handleEditTeam}
+            onDelete={handleDeleteTeam}
+          />
+
+        </div>
+      </div>
     </div>
   );
 }

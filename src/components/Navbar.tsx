@@ -1,18 +1,33 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const onHome = location.pathname === "/";
+  const goHome = () => navigate("/");
+
+  const goToLastMatchRoute = (path: "pick" | "teams") => {
+    const lastMatchId = localStorage.getItem("lastMatchId");
+    if (!lastMatchId) {
+      // If no match has been chosen yet, send user to matches list
+      navigate("/");
+      alert("Select a match from Upcoming Matches first.");
+      return;
+    }
+
+    if (path === "pick") {
+      navigate(`/pick-players/${lastMatchId}`);
+    } else {
+      navigate(`/teams/${lastMatchId}`);
+    }
+  };
 
   return (
-    <header className="bg-[var(--color-bgDark)] text-[var(--color-textPrimary)] shadow-md">
+    <header className="bg-[var(--color-bgDark)] text-[var(--color-textPrimary)] shadow-md fixed w-full z-100 ">
+      {/* Top row: brand */}
       <div className="mx-auto max-w-md px-4 py-3 flex items-center justify-between">
-        {/* Brand */}
         <button
           type="button"
-          onClick={() => navigate("/")}
+          onClick={goHome}
           className="flex items-center gap-2 focus:outline-none"
         >
           <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] flex items-center justify-center text-xs font-bold text-[var(--color-textLight)]">
@@ -25,20 +40,9 @@ export default function Navbar() {
             </span>
           </div>
         </button>
-
-        {/* Primary nav action */}
-        <button
-          type="button"
-          onClick={() => navigate("/")}
-          className={`px-3 py-1 text-xs font-medium rounded-full border transition-colors ${
-            onHome
-              ? "bg-[var(--color-primary)] border-transparent text-[var(--color-textLight)]"
-              : "bg-transparent border-[var(--color-primaryLight)] text-[var(--color-textLighter)] hover:bg-[var(--color-primaryLight)] hover:text-[var(--color-textLight)]"
-          }`}
-        >
-          Upcoming Matches
-        </button>
       </div>
+      
+      
     </header>
   );
 }
