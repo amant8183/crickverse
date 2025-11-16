@@ -15,7 +15,6 @@ export default function MyTeams() {
   const [currentPlayers, setCurrentPlayers] = useState<Player[]>(state?.players ?? []);
   const [captainId, setCaptainId] = useState<number | null>(state?.captainId ?? null);
   const [viceCaptainId, setViceCaptainId] = useState<number | null>(state?.viceCaptainId ?? null);
-  const [editingIndex, setEditingIndex] = useState<number | null>(state?.editingIndex ?? null);
 
   const [savedTeams, setSavedTeams] = useState<SavedTeam[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -47,19 +46,7 @@ export default function MyTeams() {
     const existing = JSON.parse(localStorage.getItem("fantasyTeams") || "{}");
     const existingTeams: SavedTeam[] = existing[matchId] || [];
 
-    let updatedTeams: SavedTeam[];
-    if (
-      editingIndex !== null &&
-      editingIndex >= 0 &&
-      editingIndex < existingTeams.length
-    ) {
-      // Update an existing team
-      updatedTeams = [...existingTeams];
-      updatedTeams[editingIndex] = newTeam;
-    } else {
-      // Create a new team
-      updatedTeams = [...existingTeams, newTeam];
-    }
+    const updatedTeams: SavedTeam[] = [...existingTeams, newTeam];
 
     const updated = {
       ...existing,
@@ -75,19 +62,32 @@ export default function MyTeams() {
     setCurrentPlayers([]);
     setCaptainId(null);
     setViceCaptainId(null);
-    setEditingIndex(null);
+
+    // Clear route state so refresh doesn't restore this team as current
+    navigate(`/teams/${matchId}`, { replace: true, state: {} });
   };
 
   const handleEditTeam = (index: number) => {
     if (!matchId) return;
 
     const team = savedTeams[index];
+
+    // Remove this team from saved list while it is being edited
+    const existing = JSON.parse(localStorage.getItem("fantasyTeams") || "{}");
+    const existingTeams: SavedTeam[] = existing[matchId] || [];
+    const updatedTeams = existingTeams.filter((_, i) => i !== index);
+    const updated = {
+      ...existing,
+      [matchId]: updatedTeams,
+    };
+    localStorage.setItem("fantasyTeams", JSON.stringify(updated));
+    setSavedTeams(updatedTeams);
+
     navigate(`/pick-players/${matchId}`, {
       state: {
         players: team.players,
         captainId: team.captainId,
         viceCaptainId: team.viceCaptainId,
-        editingIndex: index,
       },
     });
   };
@@ -106,19 +106,6 @@ export default function MyTeams() {
 
     localStorage.setItem("fantasyTeams", JSON.stringify(updated));
     setSavedTeams(updatedTeams);
-
-    // If we were editing this team, clear the current editor state
-    if (editingIndex !== null) {
-      if (editingIndex === index) {
-        setCurrentPlayers([]);
-        setCaptainId(null);
-        setViceCaptainId(null);
-        setEditingIndex(null);
-      } else if (editingIndex > index) {
-        // Shift editing index down if a previous team was removed
-        setEditingIndex(editingIndex - 1);
-      }
-    }
   };
 
   return (

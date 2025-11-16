@@ -38,7 +38,6 @@ export default function PickCaptain() {
         players,
         captainId,
         viceCaptainId,
-        editingIndex: state?.editingIndex ?? null,
       },
     });
   };

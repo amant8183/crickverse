@@ -34,8 +34,13 @@ export default function CaptainCard({
       <div className="flex gap-2 mt-3">
         <button
           onClick={() => onSetCaptain(player.id)}
+          disabled={isViceCaptain}
           className={`px-2 py-1 rounded ${
-            isCaptain ? "bg-blue-600 text-white" : "bg-gray-200"
+            isCaptain
+              ? "bg-blue-600 text-white"
+              : isViceCaptain
+              ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+              : "bg-gray-200"
           }`}
         >
           C
@@ -43,8 +48,13 @@ export default function CaptainCard({
 
         <button
           onClick={() => onSetViceCaptain(player.id)}
+          disabled={isCaptain}
           className={`px-2 py-1 rounded ${
-            isViceCaptain ? "bg-green-600 text-white" : "bg-gray-200"
+            isViceCaptain
+              ? "bg-green-600 text-white"
+              : isCaptain
+              ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+              : "bg-gray-200"
           }`}
         >
           VC

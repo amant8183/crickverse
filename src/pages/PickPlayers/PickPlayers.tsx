@@ -118,7 +118,6 @@ export default function PickPlayers() {
               players: selected,
               captainId: state?.captainId ?? null,
               viceCaptainId: state?.viceCaptainId ?? null,
-              editingIndex: state?.editingIndex ?? null,
             },
           })
         }
