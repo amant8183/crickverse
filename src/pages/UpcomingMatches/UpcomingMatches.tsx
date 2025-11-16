@@ -7,15 +7,18 @@ import { useNavigate } from "react-router-dom";
 export default function UpcomingMatches() {
   const [matches, setMatches] = useState<Match[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchMatches = async () => {
       try {
         const data = await getUpcomingMatches();
-        console.log("FINAL MATCHES:", data);
         setMatches(data);
+        setError(null);
       } catch (err) {
-        console.error("Error:", err);
+        console.error("Error loading matches:", err);
+        setError("Could not load upcoming matches. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -23,11 +26,21 @@ export default function UpcomingMatches() {
     fetchMatches();
   }, []);
 
-  if (loading) return <div>Loading matches...</div>;
+  if (loading) return <div className="p-4">Loading matches...</div>;
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Upcoming Matches</h1>
+
+      {error && (
+        <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
+          {error}
+        </div>
+      )}
+
+      {!error && matches.length === 0 && (
+        <p className="text-sm text-gray-600">No upcoming matches right now.</p>
+      )}
 
       {matches.map((match) => (
         <div key={match.id} className="mb-4">

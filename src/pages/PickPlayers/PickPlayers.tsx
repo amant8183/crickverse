@@ -17,11 +17,26 @@ export default function PickPlayers() {
   const [selected, setSelected] = useState<Player[]>(state?.players ?? []);
   const [roleFilter, setRoleFilter] = useState("ALL");
   const [teamFilter, setTeamFilter] = useState("ALL");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const errors = getTeamValidationErrors(selected);
 
   useEffect(() => {
-    getPlayers().then(setPlayers);
+    const fetchPlayers = async () => {
+      try {
+        const data = await getPlayers();
+        setPlayers(data);
+        setError(null);
+      } catch (err) {
+        console.error("Error loading players:", err);
+        setError("Could not load players. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlayers();
   }, [matchId]);
 
   const toggle = (p: Player) => {
@@ -46,6 +61,18 @@ export default function PickPlayers() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold">Pick Players</h1>
+
+      {loading && <p className="mt-2 text-sm text-gray-600">Loading players...</p>}
+
+      {error && (
+        <div className="mt-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
+          {error}
+        </div>
+      )}
+
+      {!loading && !error && players.length === 0 && (
+        <p className="mt-3 text-sm text-gray-600">No players available for this match.</p>
+      )}
 
       <SelectionSummary selected={selected} />
 

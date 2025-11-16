@@ -18,11 +18,20 @@ export default function MyTeams() {
   const [editingIndex, setEditingIndex] = useState<number | null>(state?.editingIndex ?? null);
 
   const [savedTeams, setSavedTeams] = useState<SavedTeam[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   // Load saved teams on mount
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("fantasyTeams") || "{}");
-    setSavedTeams(data[matchId || ""] || []);
+    try {
+      const raw = localStorage.getItem("fantasyTeams");
+      const data = raw ? JSON.parse(raw) : {};
+      setSavedTeams(data[matchId || ""] || []);
+      setError(null);
+    } catch (err) {
+      console.error("Error reading saved teams:", err);
+      setError("We had trouble loading your teams. You can still create a new team.");
+      setSavedTeams([]);
+    }
   }, [matchId]);
 
   const handleSaveTeam = () => {
@@ -115,6 +124,12 @@ export default function MyTeams() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">My Teams</h1>
+
+      {error && (
+        <div className="mb-4 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg p-3">
+          {error}
+        </div>
+      )}
 
       <CurrentTeam
         players={currentPlayers}
